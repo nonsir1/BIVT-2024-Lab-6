@@ -1,0 +1,255 @@
+﻿using System;
+
+namespace Lab_6
+{
+    class Program
+    {
+        static void Main()
+        {
+            // // Purple_1
+            // Purple_1.Participant[] participants = new Purple_1.Participant[2];
+            
+            // participants[0] = new Purple_1.Participant("Дарья", "Тихонова");
+            // participants[0].SetCriterias(new double[] { 2.58, 2.90, 3.04, 3.43 });
+            // participants[0].Jump(new int[] { 3, 4, 1, 2, 1, 3, 1 });
+            // participants[0].Jump(new int[] { 5, 3, 4, 3, 3, 3, 3 });
+            // participants[0].Jump(new int[] { 2, 4, 1, 5, 6, 1, 2 });
+            // participants[0].Jump(new int[] { 6, 4, 3, 2, 2, 1, 1 });
+            
+            // participants[1] = new Purple_1.Participant("Александр", "Козлов");
+            // participants[1].SetCriterias(new double[] { 2.95, 2.63, 3.16, 2.89 });
+            // participants[1].Jump(new int[] { 3, 5, 4, 4, 5, 1, 4 });
+            // participants[1].Jump(new int[] { 1, 6, 5, 2, 1, 4, 1 });
+            // participants[1].Jump(new int[] { 6, 2, 4, 1, 2, 6, 5 });
+            // participants[1].Jump(new int[] { 6, 5, 2, 2, 4, 3, 4 });
+            
+            // Purple_1.Participant.Sort(participants);
+            // participants[0].Print();
+            // participants[1].Print();
+
+            // // Purple_2
+            // Purple_2.Participant[] participants2 = new Purple_2.Participant[2];
+            
+            // participants2[0] = new Purple_2.Participant("Оксана", "Сидорова");
+            // participants2[0].Jump(135, new int[] { 15, 1, 3, 9, 15 });
+            
+            // participants2[1] = new Purple_2.Participant("Полина", "Полевая");
+            // participants2[1].Jump(191, new int[] { 19, 14, 9, 11, 4 });
+            
+            // Purple_2.Participant.Sort(participants2);
+            // foreach (var participant in participants2)
+            // {
+            //     participant.Print();
+            // }
+
+
+            // // Purple_3
+            // Purple_3.Participant[] participants3 = new Purple_3.Participant[10];
+            
+            // participants3[0] = new Purple_3.Participant("Виктор", "Полевой");
+            // participants3[0].Evaluate(5.93);
+            // participants3[0].Evaluate(5.44);
+            // participants3[0].Evaluate(1.2);
+            // participants3[0].Evaluate(0.28);
+            // participants3[0].Evaluate(1.57);
+            // participants3[0].Evaluate(1.86);
+            // participants3[0].Evaluate(5.89);
+            // participants3[1] = new Purple_3.Participant("Алиса", "Козлова");
+            // participants3[1].Evaluate(1.68);
+            // participants3[1].Evaluate(3.79);
+            // participants3[1].Evaluate(3.62);
+            // participants3[1].Evaluate(2.76);
+            // participants3[1].Evaluate(4.47);
+            // participants3[1].Evaluate(4.26);
+            // participants3[1].Evaluate(5.79);
+            // participants3[2] = new Purple_3.Participant("Ярослав", "Зайцев");
+            // participants3[2].Evaluate(2.93);
+            // participants3[2].Evaluate(3.1);
+            // participants3[2].Evaluate(5.46);
+            // participants3[2].Evaluate(4.88);
+            // participants3[2].Evaluate(3.99);
+            // participants3[2].Evaluate(4.79);
+            // participants3[2].Evaluate(5.56);
+            // participants3[3] = new Purple_3.Participant("Савелий", "Кристиан");
+            // participants3[3].Evaluate(4.2);
+            // participants3[3].Evaluate(4.69);
+            // participants3[3].Evaluate(3.9);
+            // participants3[3].Evaluate(1.67);
+            // participants3[3].Evaluate(1.13);
+            // participants3[3].Evaluate(5.66);
+            // participants3[3].Evaluate(5.4);
+            // participants3[4] = new Purple_3.Participant("Алиса", "Козлова");
+            // participants3[4].Evaluate(3.27);
+            // participants3[4].Evaluate(2.43);
+            // participants3[4].Evaluate(0.9);
+            // participants3[4].Evaluate(5.61);
+            // participants3[4].Evaluate(3.12);
+            // participants3[4].Evaluate(3.76);
+            // participants3[4].Evaluate(3.73);
+            // participants3[5] = new Purple_3.Participant("Алиса", "Луговая");
+            // participants3[5].Evaluate(0.75);
+            // participants3[5].Evaluate(1.13);
+            // participants3[5].Evaluate(5.43);
+            // participants3[5].Evaluate(2.07);
+            // participants3[5].Evaluate(2.68);
+            // participants3[5].Evaluate(0.83);
+            // participants3[5].Evaluate(3.68);
+            // participants3[6] = new Purple_3.Participant("Александр", "Петров");
+            // participants3[6].Evaluate(3.78);
+            // participants3[6].Evaluate(3.42);
+            // participants3[6].Evaluate(3.84);
+            // participants3[6].Evaluate(2.19);
+            // participants3[6].Evaluate(1.2);
+            // participants3[6].Evaluate(2.51);
+            // participants3[6].Evaluate(3.51);
+            // participants3[7] = new Purple_3.Participant("Мария", "Смирнова");
+            // participants3[7].Evaluate(1.35);
+            // participants3[7].Evaluate(3.4);
+            // participants3[7].Evaluate(1.85);
+            // participants3[7].Evaluate(2.02);
+            // participants3[7].Evaluate(2.78);
+            // participants3[7].Evaluate(3.23);
+            // participants3[7].Evaluate(3.03);
+            // participants3[8] = new Purple_3.Participant("Полина", "Сидорова");
+            // participants3[8].Evaluate(0.55);
+            // participants3[8].Evaluate(5.93);
+            // participants3[8].Evaluate(0.75);
+            // participants3[8].Evaluate(5.15);
+            // participants3[8].Evaluate(4.35);
+            // participants3[8].Evaluate(1.51);
+            // participants3[8].Evaluate(2.77);
+            // participants3[9] = new Purple_3.Participant("Татьяна", "Сидорова");
+            // participants3[9].Evaluate(3.86);
+            // participants3[9].Evaluate(0.19);
+            // participants3[9].Evaluate(0.46);
+            // participants3[9].Evaluate(5.14);
+            // participants3[9].Evaluate(5.37);
+            // participants3[9].Evaluate(0.94);
+            // participants3[9].Evaluate(0.84);
+            
+            // Purple_3.Participant.SetPlaces(participants3);
+            // Purple_3.Participant.Sort(participants3);
+            
+            // foreach (var participant in participants3)
+            // {
+            //     participant.Print();
+            // }
+
+            // // Purple_4
+            // Purple_4.Group group1 = new Purple_4.Group("Группа A");
+            // group1.Add(new Purple_4.Sportsman("Полина", "Луговая"));
+            // group1.Sportsmen[0].Run(422.64);
+            // group1.Add(new Purple_4.Sportsman("Савелий", "Козлов"));
+            // group1.Sportsmen[1].Run(142.05);
+            // group1.Add(new Purple_4.Sportsman("Екатерина", "Жаркова"));
+            // group1.Sportsmen[2].Run(185.23);
+            // group1.Add(new Purple_4.Sportsman("Дмитрий", "Иванов"));
+            // group1.Sportsmen[3].Run(294.32);
+            // group1.Add(new Purple_4.Sportsman("Дмитрий", "Полевой"));
+            // group1.Sportsmen[4].Run(79.26);
+            // group1.Add(new Purple_4.Sportsman("Савелий", "Петров"));
+            // group1.Sportsmen[5].Run(230.63);
+            // group1.Add(new Purple_4.Sportsman("Евгения", "Распутина"));
+            // group1.Sportsmen[6].Run(35.16);
+            // group1.Add(new Purple_4.Sportsman("Екатерина", "Луговая"));
+            // group1.Sportsmen[7].Run(376.12);
+            // group1.Add(new Purple_4.Sportsman("Мария", "Иванова"));
+            // group1.Sportsmen[8].Run(279.2);
+            // group1.Add(new Purple_4.Sportsman("Степан", "Павлов"));
+            // group1.Sportsmen[9].Run(292.38);
+            // group1.Add(new Purple_4.Sportsman("Ольга", "Павлова"));
+            // group1.Sportsmen[10].Run(467.6);
+            // group1.Add(new Purple_4.Sportsman("Ольга", "Полевая"));
+            // group1.Sportsmen[11].Run(473.82);
+            // group1.Add(new Purple_4.Sportsman("Дарья", "Павлова"));
+            // group1.Sportsmen[12].Run(290.14);
+            // group1.Add(new Purple_4.Sportsman("Дарья", "Свиридова"));
+            // group1.Sportsmen[13].Run(368.6);
+            // group1.Add(new Purple_4.Sportsman("Евгения", "Свиридова"));
+            // group1.Sportsmen[14].Run(212.67);
+            // group1.Sort();
+            
+            // Purple_4.Group group2 = new Purple_4.Group("Группа B");
+            // group2.Add(new Purple_4.Sportsman("Анастасия", "Жаркова"));
+            // group2.Sportsmen[0].Run(112.49);
+            // group2.Add(new Purple_4.Sportsman("Александр", "Павлов"));
+            // group2.Sportsmen[1].Run(472.11);
+            // group2.Add(new Purple_4.Sportsman("Степан", "Свиридов"));
+            // group2.Sportsmen[2].Run(213.92);
+            // group2.Add(new Purple_4.Sportsman("Игорь", "Сидоров"));
+            // group2.Sportsmen[3].Run(102.13);
+            // group2.Add(new Purple_4.Sportsman("Евгения", "Сидорова"));
+            // group2.Sportsmen[4].Run(263.21);
+            // group2.Add(new Purple_4.Sportsman("Мария", "Сидорова"));
+            // group2.Sportsmen[5].Run(350.75);
+            // group2.Add(new Purple_4.Sportsman("Лев", "Петров"));
+            // group2.Sportsmen[6].Run(248.68);
+            // group2.Add(new Purple_4.Sportsman("Савелий", "Козлов"));
+            // group2.Sportsmen[7].Run(325.28);
+            // group2.Add(new Purple_4.Sportsman("Егор", "Свиридов"));
+            // group2.Sportsmen[8].Run(300.0);
+            // group2.Add(new Purple_4.Sportsman("Оксана", "Жаркова"));
+            // group2.Sportsmen[9].Run(252.16);
+            // group2.Add(new Purple_4.Sportsman("Светлана", "Петрова"));
+            // group2.Sportsmen[10].Run(402.2);
+            // group2.Add(new Purple_4.Sportsman("Полина", "Петрова"));
+            // group2.Sportsmen[11].Run(397.33);
+            // group2.Add(new Purple_4.Sportsman("Екатерина", "Павлова"));
+            // group2.Sportsmen[12].Run(384.94);
+            // group2.Add(new Purple_4.Sportsman("Юлия", "Полевая"));
+            // group2.Sportsmen[13].Run(8.09);
+            // group2.Add(new Purple_4.Sportsman("Евгения", "Павлова"));
+            // group2.Sportsmen[14].Run(480.52);
+            // group2.Sort();
+            
+            // Purple_4.Group mergedGroup = Purple_4.Group.Merge(group1, group2);
+            
+            // group1.Print();
+            // group2.Print();
+            // mergedGroup.Print();
+
+            // // Purple_5
+            // Purple_5.Research survey = new Purple_5.Research("Japanese Culture Survey");
+            // survey.Add(new string[] { "Макака", "", "Манга" });
+            // survey.Add(new string[] { "Тануки", "Проницательность", "Манга" });
+            // survey.Add(new string[] { "Тануки", "Скромность", "Кимоно" });
+            // survey.Add(new string[] { "Кошка", "Внимательность", "Суши" });
+            // survey.Add(new string[] { "Сима_энага", "Дружелюбность", "Кимоно" });
+            // survey.Add(new string[] { "Макака", "Внимательность", "Самурай" });
+            // survey.Add(new string[] { "Панда", "Проницательность", "Манга" });
+            // survey.Add(new string[] { "Сима_энага", "Проницательность", "Суши" });
+            // survey.Add(new string[] { "Серау", "Внимательность", "Сакура" });
+            // survey.Add(new string[] { "Панда", "", "Кимоно" });
+            // survey.Add(new string[] { "Сима_энага", "Дружелюбность", "Сакура" });
+            // survey.Add(new string[] { "Кошка", "Внимательность", "Кимоно" });
+            // survey.Add(new string[] { "Панда", "", "Сакура" });
+            // survey.Add(new string[] { "Кошка", "Уважительность", "Фудзияма" });
+            // survey.Add(new string[] { "Панда", "Целеустремленность", "Аниме" });
+            // survey.Add(new string[] { "Серау", "Дружелюбность", "" });
+            // survey.Add(new string[] { "Панда", "", "Манга" });
+            // survey.Add(new string[] { "Сима_энага", "Скромность", "Фудзияма" });
+            // survey.Add(new string[] { "Панда", "Проницательность", "Самурай" });
+            // survey.Add(new string[] { "Кошка", "Внимательность", "Сакура" });
+            
+            // survey.Print();
+            
+            // Console.WriteLine("===== Животные:");
+            // foreach (var answer in survey.GetTopResponses(1))
+            // {
+            //     Console.WriteLine(answer);
+            // }
+            
+            // Console.WriteLine("===== Черта характера");
+            // foreach (var answer in survey.GetTopResponses(2))
+            // {
+            //     Console.WriteLine(answer);
+            // }
+            
+            // Console.WriteLine("===== Неодушевленный предмет");
+            // foreach (var answer in survey.GetTopResponses(3))
+            // {
+            //     Console.WriteLine(answer);
+            // }
+        }
+    }
+}
