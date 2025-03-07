@@ -15,11 +15,11 @@ namespace Lab_6
 
             public string Name => _firstName;
             public string Surname => _lastName;
-            public double[] Marks => _marks;
-            public int[] Places => _places;
-            public int Score => _places.Sum();
-            public int TopPlace => _places.Min();
-            public double TotalMark => _marks.Sum();
+            public double[] Marks => _marks ?? new double[0];
+            public int[] Places => _places ?? new int[0];
+            public int Score => _places?.Sum() ?? 0;
+            public int TopPlace => _places?.Length > 0 ? _places.Min() : 0;
+            public double TotalMark => _marks?.Sum() ?? 0;
 
             public Participant(string name, string surname)
             {
@@ -44,7 +44,8 @@ namespace Lab_6
                 if (participants == null) return;
                 for (int judge = 0; judge < 7; judge++)
                 {
-                    var sorted = participants.Select((p, index) => new { Index = index, Score = p.Marks[judge] })
+                    var sorted = participants.Where(p => p.Marks.Length > judge)
+                                             .Select((p, index) => new { Index = index, Score = p.Marks[judge] })
                                              .OrderByDescending(p => p.Score)
                                              .ToArray();
                     
@@ -58,46 +59,32 @@ namespace Lab_6
             public static void Sort(Participant[] array)
             {
                 if (array == null) return;
-                for (int i = 1; i < array.Length; i++)
+                Array.Sort(array, (a, b) =>
                 {
-                    Participant key = array[i];
-                    int j = i - 1;
-                    while (j >= 0)
+                    int scoreComparison = a.Score.CompareTo(b.Score);
+                    if (scoreComparison != 0) return scoreComparison;
+                    
+                    for (int i = 0; i < 7; i++)
                     {
-                        int scoreComparison = array[j].Score.CompareTo(key.Score);
-                        if (scoreComparison < 0)
-                            break;
-                        if (scoreComparison == 0)
-                        {
-                            for (int k = 0; k < 7; k++)
-                            {
-                                if (array[j].Places[k] != key.Places[k])
-                                {
-                                    if (array[j].Places[k] < key.Places[k])
-                                        break;
-                                }
-                            }
-                            if (array[j].Marks.Sum() > key.Marks.Sum())
-                                break;
-                        }
-                        array[j + 1] = array[j];
-                        j--;
+                        if (a.Places.Length > i && b.Places.Length > i && a.Places[i] != b.Places[i])
+                            return a.Places[i].CompareTo(b.Places[i]);
                     }
-                    array[j + 1] = key;
-                }
+                    
+                    return b.TotalMark.CompareTo(a.TotalMark);
+                });
             }
 
             public void Print()
             {
                 Console.WriteLine($"{_firstName} {_lastName}");
                 Console.Write("Marks: ");
-                foreach (double mark in _marks)
+                foreach (double mark in Marks)
                 {
                     Console.Write(mark + "  ");
                 }
                 Console.WriteLine();
                 Console.Write("Places: ");
-                foreach (int place in _places)
+                foreach (int place in Places)
                 {
                     Console.Write(place + "  ");
                 }

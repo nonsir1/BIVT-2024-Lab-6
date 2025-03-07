@@ -26,7 +26,7 @@ namespace Lab_6
                 }
             }
 
-            public double Result
+            public int Result
             {
                 get
                 {
@@ -42,6 +42,7 @@ namespace Lab_6
                     return styleScore + distanceScore;
                 }
             }
+
 
             public Participant(string name, string surname)
             {

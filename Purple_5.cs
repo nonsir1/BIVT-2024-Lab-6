@@ -25,19 +25,23 @@ namespace Lab_6
             public int CountVotes(Response[] res, int qNum)
             {
                 if (res == null || qNum < 1 || qNum > 3) return 0;
+
+                string localAnimal = _animal;
+                string localTrait = _chTrait;
+                string localConcept = _concept;
                 
                 int count = 0;
                 foreach (var r in res)
                 {
-                    if (qNum == 1 && r.Animal == _animal)
+                    if (qNum == 1 && r.Animal == localAnimal)
                     {
                         count++;
                     }
-                    else if (qNum == 2 && r.CharacterTrait == _chTrait)
+                    else if (qNum == 2 && r.CharacterTrait == localTrait)
                     {
                         count++;
                     }
-                    else if (qNum == 3 && r.Concept == _concept)
+                    else if (qNum == 3 && r.Concept == localConcept)
                     {
                         count++;
                     }
@@ -51,14 +55,14 @@ namespace Lab_6
             }
         }
 
-        public struct Research
+        public class Research
         {
             private string _name;
             private Response[] _res;
             private int _count;
 
             public string Name => _name;
-            public Response[] Responses => _res;
+            public Response[] Responses => _res.Take(_count).ToArray();
 
             public Research(string name)
             {
@@ -70,20 +74,19 @@ namespace Lab_6
             public void Add(string[] a)
             {
                 if (a.Length != 3) return;
-                
+
                 if (_count >= _res.Length)
                 {
                     Array.Resize(ref _res, _res.Length * 2);
                 }
-                _res[_count] = new Response(a[0], a[1], a[2]);
-                _count++;
+                _res[_count++] = new Response(a[0], a[1], a[2]);
             }
 
             public string[] GetTopResponses(int q)
             {
                 if (q < 1 || q > 3) return new string[0];
 
-                var grouped = _res.Take(_count)
+                return _res.Take(_count)
                     .GroupBy(r => q == 1 ? r.Animal : q == 2 ? r.CharacterTrait : r.Concept)
                     .Where(g => !string.IsNullOrEmpty(g.Key))
                     .Select(g => new { Answer = g.Key, Count = g.Count() })
@@ -92,8 +95,6 @@ namespace Lab_6
                     .Take(5)
                     .Select(g => g.Answer)
                     .ToArray();
-                
-                return grouped;
             }
 
             public void Print()

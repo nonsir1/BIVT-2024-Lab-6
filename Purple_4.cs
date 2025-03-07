@@ -35,7 +35,10 @@ namespace Lab_6
 
             public void Print()
             {
-                Console.WriteLine($"{_firstName} {_lastName} - Time: {_time}");
+                if (_run)
+                    Console.WriteLine($"{_firstName} {_lastName} - Time: {_time}");
+                else
+                    Console.WriteLine($"{_firstName} {_lastName} - Time: DNS");
             }
         }
 
@@ -46,20 +49,20 @@ namespace Lab_6
             private int _count;
 
             public string Name => _name;
-            public Sportsman[] Sportsmen => _sportsmen;
+            public Sportsman[] Sportsmen => _sportsmen.Take(_count).ToArray();
+            public int Count => _count;
 
             public Group(string name)
             {
                 _name = name;
-                _sportsmen = new Sportsman[10];
+                _sportsmen = new Sportsman[0];
                 _count = 0;
             }
 
             public Group(Group group)
             {
                 _name = group._name;
-                _sportsmen = new Sportsman[group._sportsmen.Length];
-                Array.Copy(group._sportsmen, _sportsmen, group._sportsmen.Length);
+                _sportsmen = group._sportsmen.Take(group._count).ToArray();
                 _count = group._count;
             }
 
@@ -67,10 +70,9 @@ namespace Lab_6
             {
                 if (_count >= _sportsmen.Length)
                 {
-                    Array.Resize(ref _sportsmen, _sportsmen.Length * 2);
+                    Array.Resize(ref _sportsmen, Math.Max(1, _sportsmen.Length * 2));
                 }
-                _sportsmen[_count] = sportsman;
-                _count++;
+                _sportsmen[_count++] = sportsman;
             }
 
             public void Add(Sportsman[] sportsmen)
@@ -83,38 +85,19 @@ namespace Lab_6
 
             public void Add(Group group)
             {
-                Add(group._sportsmen);
+                Add(group.Sportsmen);
             }
 
             public void Sort()
             {
-                for (int i = 1; i < _count; i++)
-                {
-                    Sportsman key = _sportsmen[i];
-                    int j = i - 1;
-                    while (j >= 0 && _sportsmen[j].Time > key.Time)
-                    {
-                        _sportsmen[j + 1] = _sportsmen[j];
-                        j--;
-                    }
-                    _sportsmen[j + 1] = key;
-                }
+                Array.Sort(_sportsmen, 0, _count, Comparer<Sportsman>.Create((s1, s2) => s1.Time.CompareTo(s2.Time)));
             }
 
             public static Group Merge(Group group1, Group group2)
             {
                 Group mergedGroup = new Group("Финалисты");
-                
-                for (int i = 0; i < group1._count; i++)
-                {
-                    mergedGroup.Add(group1._sportsmen[i]);
-                }
-                
-                for (int i = 0; i < group2._count; i++)
-                {
-                    mergedGroup.Add(group2._sportsmen[i]);
-                }
-            
+                mergedGroup.Add(group1);
+                mergedGroup.Add(group2);
                 mergedGroup.Sort();
                 return mergedGroup;
             }

@@ -3,7 +3,8 @@ using System.Linq;
 
 namespace Lab_6
 {
-    class Purple_1 {
+    public class Purple_1 
+    {
         public struct Participant
         {
             private string _firstName;
