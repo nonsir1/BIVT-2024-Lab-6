@@ -15,11 +15,32 @@ namespace Lab_6
 
             public string Name => _firstName;
             public string Surname => _lastName;
-            public double[] Marks => _marks ?? new double[0];
-            public int[] Places => _places ?? new int[0];
-            public int Score => _places?.Sum() ?? 0;
-            public int TopPlace => _places?.Length > 0 ? _places.Min() : 0;
-            public double TotalMark => _marks?.Sum() ?? 0;
+            public double[] Marks
+            {
+                get
+                {
+                    if (_marks == null)
+                        return null;
+                    double[] copy = new double[_marks.Length];
+                    Array.Copy(_marks, copy, _marks.Length);
+                    return copy;
+                }
+            }
+            public int[] Places
+            {
+                get
+                {
+                    if (_places == null)
+                        return null;
+                    int[] copy = new int[_places.Length];
+                    Array.Copy(_places, copy, _places.Length);
+                    return copy;
+                }
+            }
+            public int Score => _places == null ? 0 : _places.Sum();
+
+            private int TopPlace => _places == null ? 0 : _places.Min();
+            private double TotalSum => _marks == null ? 0 : _marks.Sum();
 
             public Participant(string name, string surname)
             {
@@ -42,36 +63,36 @@ namespace Lab_6
             public static void SetPlaces(Participant[] participants)
             {
                 if (participants == null) return;
-                for (int judge = 0; judge < 7; judge++)
+                
+                for (int i = 0; i < 7; i++)
                 {
-                    var sorted = participants.Where(p => p.Marks.Length > judge)
-                                             .Select((p, index) => new { Index = index, Score = p.Marks[judge] })
-                                             .OrderByDescending(p => p.Score)
-                                             .ToArray();
+                    Participant[] arr = participants
+                        .OrderByDescending(p => p._marks[i])
+                        .ThenBy(p => (p._places != null && p._places.Length > 0) ? p._places[p._places.Length - 1] : int.MaxValue)
+                        .ToArray();
                     
-                    for (int rank = 0; rank < sorted.Length; rank++)
+                    Array.Copy(arr, participants, participants.Length);
+                    
+                    for (int j = 0; j < participants.Length; j++)
                     {
-                        participants[sorted[rank].Index]._places[judge] = rank + 1;
+                        participants[j]._places[i] = j + 1;
                     }
                 }
+                Participant[] finalSorted = participants
+                    .OrderBy(p => (p._places != null && p._places.Length > 0) ? p._places[p._places.Length - 1] : int.MaxValue)
+                    .ToArray();
+                Array.Copy(finalSorted, participants, participants.Length);
             }
 
             public static void Sort(Participant[] array)
             {
                 if (array == null) return;
-                Array.Sort(array, (a, b) =>
-                {
-                    int scoreComparison = a.Score.CompareTo(b.Score);
-                    if (scoreComparison != 0) return scoreComparison;
-                    
-                    for (int i = 0; i < 7; i++)
-                    {
-                        if (a.Places.Length > i && b.Places.Length > i && a.Places[i] != b.Places[i])
-                            return a.Places[i].CompareTo(b.Places[i]);
-                    }
-                    
-                    return b.TotalMark.CompareTo(a.TotalMark);
-                });
+                var sorted = array
+                    .OrderBy(p => p.Score)
+                    .ThenBy(p => p.TopPlace)
+                    .ThenByDescending(p => p.TotalSum)
+                    .ToArray();
+                Array.Copy(sorted, array, sorted.Length);
             }
 
             public void Print()
@@ -90,8 +111,6 @@ namespace Lab_6
                 }
                 Console.WriteLine();
                 Console.WriteLine("Total Score: " + Score);
-                Console.WriteLine("Top Place: " + TopPlace);
-                Console.WriteLine("Total Marks: " + TotalMark);
                 Console.WriteLine();
             }
         }

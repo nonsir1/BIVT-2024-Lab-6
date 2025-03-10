@@ -33,15 +33,17 @@ namespace Lab_6
                 int count = 0;
                 foreach (var r in res)
                 {
-                    if (qNum == 1 && r.Animal == localAnimal)
+                    if (r.Equals(default(Response))) continue;
+                    
+                    if (qNum == 1 && r.Animal != null && _animal != null && r.Animal == _animal)
                     {
                         count++;
                     }
-                    else if (qNum == 2 && r.CharacterTrait == localTrait)
+                    else if (qNum == 2 && r.CharacterTrait != null && _chTrait != null && r.CharacterTrait == _chTrait)
                     {
                         count++;
                     }
-                    else if (qNum == 3 && r.Concept == localConcept)
+                    else if (qNum == 3 && r.Concept != null && _concept != null && r.Concept == _concept)
                     {
                         count++;
                     }
@@ -58,7 +60,7 @@ namespace Lab_6
         public class Research
         {
             private string _name;
-            private Response[] _res;
+            private Response[] _res = new Response[0];
             private int _count;
 
             public string Name => _name;
@@ -73,7 +75,7 @@ namespace Lab_6
 
             public void Add(string[] a)
             {
-                if (a.Length != 3) return;
+                if (a == null || a.Length != 3 || a.Any(item => item == null)) return;
 
                 if (_count >= _res.Length)
                 {
@@ -84,16 +86,14 @@ namespace Lab_6
 
             public string[] GetTopResponses(int q)
             {
-                if (q < 1 || q > 3) return new string[0];
+                if (_res == null || q < 1 || q > 3) return new string[0];
 
                 return _res.Take(_count)
                     .GroupBy(r => q == 1 ? r.Animal : q == 2 ? r.CharacterTrait : r.Concept)
                     .Where(g => !string.IsNullOrEmpty(g.Key))
-                    .Select(g => new { Answer = g.Key, Count = g.Count() })
-                    .OrderByDescending(g => g.Count)
-                    .ThenBy(g => g.Answer)
+                    .OrderByDescending(g => g.Count())
                     .Take(5)
-                    .Select(g => g.Answer)
+                    .Select(g => g.Key)
                     .ToArray();
             }
 
