@@ -24,29 +24,17 @@ namespace Lab_6
 
             public int CountVotes(Response[] res, int qNum)
             {
-                if (res == null || qNum < 1 || qNum > 3) return 0;
-
-                string localAnimal = _animal;
-                string localTrait = _chTrait;
-                string localConcept = _concept;
-                
+                if (res == null || qNum < 1 || qNum > 3)
+                    return 0;
                 int count = 0;
                 foreach (var r in res)
                 {
-                    if (r.Equals(default(Response))) continue;
-                    
-                    if (qNum == 1 && r.Animal != null && _animal != null && r.Animal == _animal)
-                    {
+                    if (qNum == 1 && r.Animal == _animal)
                         count++;
-                    }
-                    else if (qNum == 2 && r.CharacterTrait != null && _chTrait != null && r.CharacterTrait == _chTrait)
-                    {
+                    else if (qNum == 2 && r.CharacterTrait == _chTrait)
                         count++;
-                    }
-                    else if (qNum == 3 && r.Concept != null && _concept != null && r.Concept == _concept)
-                    {
+                    else if (qNum == 3 && r.Concept == _concept)
                         count++;
-                    }
                 }
                 return count;
             }
@@ -60,11 +48,11 @@ namespace Lab_6
         public class Research
         {
             private string _name;
-            private Response[] _res = new Response[0];
+            private Response[] _res;
             private int _count;
 
             public string Name => _name;
-            public Response[] Responses => _res.Take(_count).ToArray();
+            public Response[] Responses => _res == null ? new Response[0] : _res.Take(_count).ToArray();
 
             public Research(string name)
             {
@@ -75,7 +63,8 @@ namespace Lab_6
 
             public void Add(string[] a)
             {
-                if (a == null || a.Length != 3 || a.Any(item => item == null)) return;
+                if (a == null || a.Length != 3)
+                    return;
 
                 if (_count >= _res.Length)
                 {
@@ -86,10 +75,13 @@ namespace Lab_6
 
             public string[] GetTopResponses(int q)
             {
-                if (_res == null || q < 1 || q > 3) return new string[0];
+                if (_res == null || q < 1 || q > 3)
+                    return new string[0];
 
                 return _res.Take(_count)
-                    .GroupBy(r => q == 1 ? r.Animal : q == 2 ? r.CharacterTrait : r.Concept)
+                    .GroupBy(r => q == 1 ? r.Animal
+                                   : q == 2 ? r.CharacterTrait
+                                   : r.Concept)
                     .Where(g => !string.IsNullOrEmpty(g.Key))
                     .OrderByDescending(g => g.Count())
                     .Take(5)

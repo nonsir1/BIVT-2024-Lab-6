@@ -49,19 +49,27 @@ namespace Lab_6
             private int _count;
 
             public string Name => _name;
-            public Sportsman[] Sportsmen => _sportsmen == null ? new Sportsman[0] : _sportsmen.Take(_count).ToArray();
+            public Sportsman[] Sportsmen => _sportsmen;
 
             public Group(string name)
             {
                 _name = name;
-                _sportsmen = new Sportsman[0];
+                _sportsmen = null;
                 _count = 0;
             }
 
             public Group(Group group)
             {
                 _name = group._name;
-                _sportsmen = group._sportsmen == null ? new Sportsman[0] : group._sportsmen.Take(group._count).ToArray();
+                if (group._sportsmen == null)
+                {
+                    _sportsmen = null;
+                }
+                else
+                {
+                    _sportsmen = new Sportsman[group._count];
+                    Array.Copy(group._sportsmen, _sportsmen, group._count);
+                }
                 _count = group._count;
             }
 
@@ -70,13 +78,15 @@ namespace Lab_6
                 if (_sportsmen == null)
                 {
                     _sportsmen = new Sportsman[1];
-                    _count = 0;
+                    _sportsmen[0] = sportsman;
+                    _count = 1;
                 }
-                if (_count >= _sportsmen.Length)
+                else
                 {
-                    Array.Resize(ref _sportsmen, Math.Max(1, _sportsmen.Length * 2));
+                    Array.Resize(ref _sportsmen, _count + 1);
+                    _sportsmen[_count] = sportsman;
+                    _count++;
                 }
-                _sportsmen[_count++] = sportsman;
             }
 
             public void Add(Sportsman[] sportsmen)
@@ -96,7 +106,7 @@ namespace Lab_6
             public void Sort()
             {
                 if (_sportsmen == null || _count == 0) return;
-                Array.Sort(_sportsmen, 0, _count, Comparer<Sportsman>.Create((s1, s2) => s1.Time.CompareTo(s2.Time)));
+                _sportsmen = _sportsmen.OrderBy(s => s.Time).ToArray();
             }
 
             public static Group Merge(Group group1, Group group2)
@@ -106,7 +116,7 @@ namespace Lab_6
 
                 Sportsman[] g1 = group1.Sportsmen;
                 Sportsman[] g2 = group2.Sportsmen;
-                int n1 = g1.Length, n2 = g2.Length;
+                int n1 = g1?.Length ?? 0, n2 = g2?.Length ?? 0;
                 Sportsman[] merged = new Sportsman[n1 + n2];
                 int i = 0, j = 0, k = 0;
                 while (i < n1 && j < n2)
@@ -137,9 +147,12 @@ namespace Lab_6
             public void Print()
             {
                 Console.WriteLine($"=========== {_name} ===========");
-                for (int i = 0; i < _count; i++)
+                if (_sportsmen != null)
                 {
-                    _sportsmen[i].Print();
+                    for (int i = 0; i < _count; i++)
+                    {
+                        _sportsmen[i].Print();
+                    }
                 }
             }
         }
