@@ -54,39 +54,23 @@ namespace Lab_6
             public Group(string name)
             {
                 _name = name;
-                _sportsmen = null;
+                _sportsmen = new Sportsman[0];
                 _count = 0;
             }
 
             public Group(Group group)
             {
                 _name = group._name;
-                if (group._sportsmen == null)
-                {
-                    _sportsmen = null;
-                }
-                else
-                {
-                    _sportsmen = new Sportsman[group._count];
-                    Array.Copy(group._sportsmen, _sportsmen, group._count);
-                }
+                _sportsmen = new Sportsman[group._sportsmen.Length];
+                Array.Copy(group._sportsmen, _sportsmen, group._sportsmen.Length);
                 _count = group._count;
             }
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null)
-                {
-                    _sportsmen = new Sportsman[1];
-                    _sportsmen[0] = sportsman;
-                    _count = 1;
-                }
-                else
-                {
-                    Array.Resize(ref _sportsmen, _count + 1);
-                    _sportsmen[_count] = sportsman;
-                    _count++;
-                }
+                Array.Resize(ref _sportsmen, _count + 1);
+                _sportsmen[_count] = sportsman;
+                _count++;
             }
 
             public void Add(Sportsman[] sportsmen)
