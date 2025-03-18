@@ -22,31 +22,35 @@ namespace Lab_6
                 _concept = concept;
             }
 
-            public int CountVotes(Response[] res, int qNum)
+            public int CountVotes(Response[] responses, int questionNumber)
             {
-                if (res == null || qNum < 1 || qNum > 3) return 0;
+                if (responses == null || questionNumber < 1 || questionNumber > 3)
+                    return 0;
 
-                string localAnimal = _animal;
-                string localTrait = _chTrait;
-                string localConcept = _concept;
-                
-                int count = 0;
-                foreach (var r in res)
+                string currentAnswer = questionNumber switch
                 {
-                    if (r.Equals(default(Response))) continue;
-                    
-                    if (qNum == 1 && r.Animal != null && _animal != null && r.Animal == _animal)
+                    1 => _animal,
+                    2 => _chTrait,
+                    3 => _concept,
+                    _ => null
+                };
+
+                if (string.IsNullOrEmpty(currentAnswer))
+                    return 0;
+
+                int count = 0;
+                foreach (var r in responses)
+                {
+                    string ans = questionNumber switch
                     {
+                        1 => r.Animal,
+                        2 => r.CharacterTrait,
+                        3 => r.Concept,
+                        _ => null
+                    };
+
+                    if (!string.IsNullOrEmpty(ans) && ans == currentAnswer)
                         count++;
-                    }
-                    else if (qNum == 2 && r.CharacterTrait != null && _chTrait != null && r.CharacterTrait == _chTrait)
-                    {
-                        count++;
-                    }
-                    else if (qNum == 3 && r.Concept != null && _concept != null && r.Concept == _concept)
-                    {
-                        count++;
-                    }
                 }
                 return count;
             }
@@ -57,40 +61,40 @@ namespace Lab_6
             }
         }
 
-        public class Research
+        public struct Research
         {
             private string _name;
-            private Response[] _res = new Response[0];
-            private int _count;
+            private Response[] _res;
 
             public string Name => _name;
-            public Response[] Responses => _res.Take(_count).ToArray();
+            public Response[] Responses => _res;
 
             public Research(string name)
             {
                 _name = name;
-                _res = new Response[10];
-                _count = 0;
+                _res = new Response[0];
             }
 
-            public void Add(string[] a)
+            public void Add(string[] answers)
             {
-                if (a == null || a.Length != 3 || a.Any(item => item == null)) return;
-
-                if (_count >= _res.Length)
-                {
-                    Array.Resize(ref _res, _res.Length * 2);
-                }
-                _res[_count++] = new Response(a[0], a[1], a[2]);
+                if (answers == null || answers.Length != 3)
+                    return;
+                Array.Resize(ref _res, _res.Length + 1);
+                _res[_res.Length - 1] = new Response(answers[0], answers[1], answers[2]);
             }
 
-            public string[] GetTopResponses(int q)
+            public string[] GetTopResponses(int question)
             {
-                if (_res == null || q < 1 || q > 3) return new string[0];
+                if (question < 1 || question > 3)
+                    return new string[0];
 
-                return _res.Take(_count)
-                    .GroupBy(r => q == 1 ? r.Animal : q == 2 ? r.CharacterTrait : r.Concept)
-                    .Where(g => !string.IsNullOrEmpty(g.Key))
+                return _res
+                    .Where(r => question == 1 ? !string.IsNullOrEmpty(r.Animal)
+                            : question == 2 ? !string.IsNullOrEmpty(r.CharacterTrait)
+                            : !string.IsNullOrEmpty(r.Concept))
+                    .GroupBy(r => question == 1 ? r.Animal
+                                   : question == 2 ? r.CharacterTrait
+                                   : r.Concept)
                     .OrderByDescending(g => g.Count())
                     .Take(5)
                     .Select(g => g.Key)
@@ -100,7 +104,7 @@ namespace Lab_6
             public void Print()
             {
                 Console.WriteLine($"======== {_name} ========");
-                foreach (var response in _res.Take(_count))
+                foreach (var response in _res)
                 {
                     response.Print();
                 }
